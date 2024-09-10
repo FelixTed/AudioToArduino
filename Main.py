@@ -6,7 +6,7 @@ import threading
 import keyboard  # For detecting key presses
 
 # Configure the serial port
-ser = serial.Serial('COM3', 115200)
+ser = serial.Serial('COM3', 9600)
 
 # Audio settings
 sample_rate = 44100  # Hertz
@@ -36,7 +36,6 @@ def startAudio():
 
 def record_audio():
     with sd.InputStream(callback=send_audio_to_serial, channels=channels, samplerate=sample_rate):
-        print("Recording... Press 'q' to stop.")
         while recording[0]:
             sd.sleep(100)  # Sleep for a short period to avoid high CPU usage
     # Close the serial port when recording stops
@@ -48,7 +47,6 @@ def stop_recording(keyboard_event):
     recording[0] = False
 
 # Register a key listener for 'q' to stop recording
-keyboard.on_press_key('q', stop_recording)
 
 # Opening window
 window = tk.Tk()
